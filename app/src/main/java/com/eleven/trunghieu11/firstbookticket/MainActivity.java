@@ -74,16 +74,13 @@ public class MainActivity extends AppCompatActivity {
         enableAll(ShareClass.DISABLE);
         enableStatus = ShareClass.DISABLE;
 
-        long futureInMillis = System.currentTimeMillis() + ShareClass.FIRST_DELAY;
-        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
+        Intent notificationIntent = new Intent(this, NotificationService.class);
         notificationIntent.putExtra(ShareClass.URL_KEY, url);
         notificationIntent.putExtra(ShareClass.TERM_KEY, term);
         notificationIntent.putExtra(ShareClass.START_TERM_KEY, startTerm);
         notificationIntent.putExtra(ShareClass.END_TERM_KEY, endTerm);
 
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
+        startService(notificationIntent);
     }
 
     @Override
@@ -119,10 +116,8 @@ public class MainActivity extends AppCompatActivity {
         enableAll(ShareClass.ENABLE);
         enableStatus = ShareClass.ENABLE;
 
-        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
+        Intent notificationIntent = new Intent(this, NotificationService.class);
+        stopService(notificationIntent);
     }
 
     public void clearAllField(View view) {

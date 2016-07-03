@@ -32,7 +32,7 @@ public class NotificationPublisher extends BroadcastReceiver {
             showNotification(context, intent);
         }
 
-        long futureInMillis = System.currentTimeMillis() + ShareClass.DELAY;
+        long futureInMillis = System.currentTimeMillis() + ShareClass.FIRST_DELAY;
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
         notificationIntent.putExtra(ShareClass.URL_KEY, url);
         notificationIntent.putExtra(ShareClass.TERM_KEY, term);
